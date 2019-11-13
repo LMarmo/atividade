@@ -41,7 +41,7 @@ class Customer {
 
         //show figures for this rental
        result += "\t" + each.getMovie().getTitle()+ "\t" +
-            String.valueOf(each.getCharge()) + "\n";
+            String.valueOf(each.getCharge(this)) + "\n";
         
 
      }
@@ -67,19 +67,12 @@ class Customer {
         Enumeration rentals = _rentals.elements();
        while (rentals.hasMoreElements()) {
           Rental each = (Rental) rentals.nextElement();
-          result += each.getCharge();
+          result += each.getCharge(this);
        }
        return result;
     }
 
-    private int getFrequentRenterPoints(int frequentRenterPoints, Rental each) {
-        // add frequent renter points
-        frequentRenterPoints ++;
-        // add bonus for a two day new release rental
-        if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
-                each.getDaysRented() > 1) frequentRenterPoints ++;
-        return frequentRenterPoints;
-    }
+   
     
     public String htmlStatement() {
    Enumeration rentals = _rentals.elements();
@@ -88,7 +81,7 @@ class Customer {
       Rental each = (Rental) rentals.nextElement();
       // show figures for each rental
       result += each.getMovie().getTitle()+ ": " +
-                String.valueOf(each.getCharge()) + "<BR>\n";
+                String.valueOf(each.getCharge(this)) + "<BR>\n";
    }
    
    // add footer lines
